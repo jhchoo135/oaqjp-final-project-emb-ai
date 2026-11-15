@@ -1,8 +1,15 @@
+''' Tests the emotion_detection module
+'''
 import unittest
 from EmotionDetection.emotion_detection import emotion_detector
 
 class TestEmotionDetector(unittest.TestCase):
+    ''' The class to test the emotion_detection function
+    '''
     def test_emotion_detector(self):
+        ''' The function to test the emotion_detection function
+            All 5 emotions are tested
+        '''
         result1 = emotion_detector("I am glad this happened")
         self.assertEqual(result1["dominant_emotion"], "joy")
 
