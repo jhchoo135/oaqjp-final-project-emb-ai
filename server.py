@@ -1,12 +1,26 @@
+''' Executing this function initiates the application of emotion
+    detection to be executed over the Flask channel and deployed on
+    localhost:5000.
+'''
+# Import Flask, render_template, request from the flask pramework package
 from flask import Flask, render_template, request
+
+# Import the emotion_detector function from the package created
 from EmotionDetection.emotion_detection import emotion_detector
 
 app = Flask(__name__)
 
 @app.route("/emotionDetector")
 def detect_emotions():
+    ''' This function sends text_to_analyse to the Watson NLP Library
+    and returns the results
+    '''
     text_to_analyze = request.args.get("textToAnalyze")
     response = emotion_detector(text_to_analyze)
+
+    if response['dominant_emotion'] is None:
+        return "<b>Invalid text! Please try again!</b>"
+
     return (
         f"For the given statement, the system response is "
         f"'anger': {response['anger']}, "
@@ -19,6 +33,8 @@ def detect_emotions():
 
 @app.route("/")
 def render_index_page():
+    ''' This function renders the index.html page
+    '''
     return render_template("index.html")
 
 if __name__ == "__main__":
